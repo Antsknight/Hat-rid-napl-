@@ -1,10 +1,5 @@
 import keyboard
-
-class Felhasznalo:
-    def __init__(self,id,nev,jelszo):
-        self.id = id
-        self.nev = nev
-        self.jelszo = jelszo
+from FelhasznaloClass import Felhasznalo
 
 
 def Menu():
@@ -14,10 +9,10 @@ def Menu():
         try:  
             if keyboard.is_pressed('b'):  
                asd = False
-               return Bejelentkezes()
+               Bejelentkezes()
             elif keyboard.is_pressed('r'):
                asd = False
-            
+               Regisztracio()
         except:
             return
 
@@ -32,7 +27,25 @@ def Bejelentkezes():
         else:
             return Felhasznalo(-1,"Hiba nincs ilyen felhasználó","")
 
-
+def Regisztracio():
+    NewID = -1
+    username = input("Adj meg egy felhasználó nevet: ")
+    with open('felhasznalok.txt', 'r') as file:
+        ellenorzes = file.readlines()
+        sor = -1
+        while sor+1 < len(ellenorzes):
+            sor += 1
+            adatok = ellenorzes[sor].strip().split(';')
+            print(adatok)
+            NewID = int(adatok[0])+1
+            if adatok[1] == username:
+                print("Ez a felhasználó név már létezik!")
+                username = input("Adj meg egy felhasználó nevet: ")
+                sor = -1
+    password = input("Add meg egy jelszót: ")
+    with open('felhasznalok.txt', 'a') as file: 
+        file.write(f"\n{NewID};{username};{password}")
+    print("Sikeres regisztráció!")
 print("start")
-felhasznalo = Menu()
-print(felhasznalo.nev)
+Menu()
+
