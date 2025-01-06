@@ -36,7 +36,6 @@ def Regisztracio():
         while sor+1 < len(ellenorzes):
             sor += 1
             adatok = ellenorzes[sor].strip().split(';')
-            print(adatok)
             NewID = int(adatok[0])+1
             if adatok[1] == username:
                 print("Ez a felhasználó név már létezik!")
@@ -46,6 +45,7 @@ def Regisztracio():
     with open('felhasznalok.txt', 'a') as file: 
         file.write(f"\n{NewID};{username};{password}")
     print("Sikeres regisztráció!")
-print("start")
 Menu()
 
+"""
+"""
