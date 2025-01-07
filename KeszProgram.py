@@ -7,7 +7,8 @@ from FelhasznaloClass import Felhasznalo
 
 def Menu():
     asd = True
-    print("Bejelentkezéshez nyomd meg a ,b, regisztrációhoz az ,r, betűt! ")
+    print("B: Bejenentkezés")
+    print("R: Regisztráció")
     while asd:
         try:  
             if keyboard.is_pressed('b'):  
@@ -99,17 +100,28 @@ def UjFile(user):
     UserMenu(user)
 
 def FajlSzerkVMegt(user):
+    user_mappa = f"users/{user.nev}"
+    metadata_path = os.path.join(user_mappa, "user_metadata.json")
+
+    with open(metadata_path, 'r') as meta_file:
+        metadata = json.load(meta_file)
+
+    print("Fájlok:")
+    for file_nev, info in metadata.items():
+        status = "Kész" if info["done"] else "Folyamatban"
+        print(f"- {file_nev} [{status}]")
+
     print("\n")
-    print("W: Fájlok megtekintése")
-    print("E: Fájlok szerkesztése")
+    print("F: Fájlok megtekintése")
+    print("S: Fájlok szerkesztése")
     print("M: Vissza a főmenübe")
     while True:
         try:
-            if keyboard.is_pressed('E'):
+            if keyboard.is_pressed('S'):
                 FileSzerkesztes(user)
                 time.sleep(0.5)
 
-            elif keyboard.is_pressed('W'):
+            elif keyboard.is_pressed('F'):
                 FileMegtekintes(user)
                 time.sleep(0.5)
 
@@ -149,10 +161,10 @@ def FileMegtekintes(user):
         else:
             print("Nem található ilyen fájl a fájlok listájában.")
         print("M: Vissza a főmenübe")
-        print("E: Fájlok szerkesztése")
+        print("S: Fájlok szerkesztése")
         while True:
             try:
-                if keyboard.is_pressed('E'):
+                if keyboard.is_pressed('S'):
                     FileSzerkesztes(user)
                     time.sleep(0.5)
 
@@ -167,26 +179,27 @@ def FileMegtekintes(user):
         print("Nincsenek fájljaid.")
 
 def FileSzerkesztes(user):
-    user_mappa = f"users/{user.nev}"
-    file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
-    file_path = os.path.join(user_mappa, file_nev)
-
-    try:
-        with open(file_path, 'r') as file:
-            tartalom = file.read()
-            print(f"Jelenlegi tartalom a(z) {file_nev} fájlban:\n")
-            print(tartalom)
-    except FileNotFoundError:
-        print(f"Hiba: a fájl {file_nev} nem található.")
-        return
-
     print("Válassz az alábbi lehetőségek közül:")
     print("E: Fájl tartalmának szerkesztése")
+    print("F: Fájl tartalmának törlése")
     print("D: Fájl törlése")
     print("M: Vissza a főmenübe")    
     while True:
         try:
             if keyboard.is_pressed('E'):
+                user_mappa = f"users/{user.nev}"
+                file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
+                file_path = os.path.join(user_mappa, file_nev)
+
+                try:
+                    with open(file_path, 'r') as file:
+                        tartalom = file.read()
+                        print(f"Jelenlegi tartalom a(z) {file_nev} fájlban:\n")
+                        print(tartalom)
+                except FileNotFoundError:
+                    print(f"Hiba: a fájl {file_nev} nem található.")
+                    FileSzerkesztes(user)
+
                 print("Add meg az új tartalmat:")
                 with open(file_path, 'r') as file:
                     jel_taralom = file.read()
@@ -195,9 +208,43 @@ def FileSzerkesztes(user):
                 with open(file_path, 'w') as file:
                     file.write(jel_taralom + uj_tartalom)
                 print(f"A(z) {file_nev} fájl sikeresen frissítve!")
-                UserMenu(user)
+                FileSzerkesztes(user)
                 break
+
+            elif keyboard.is_pressed('F'):
+                user_mappa = f"users/{user.nev}"
+                file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
+                file_path = os.path.join(user_mappa, file_nev)
+
+                try:
+                    with open(file_path, 'r') as file:
+                        tartalom = file.read()
+                        print(f"Jelenlegi tartalom a(z) {file_nev} fájlban:\n")
+                        print(tartalom)
+                except FileNotFoundError:
+                    print(f"Hiba: a fájl {file_nev} nem található.")
+                    FileSzerkesztes(user)
+
+                with open(file_path, 'w') as file:
+                    file.write(" ")
+                print(f"A(z) {file_nev} fájl sikeresen frissítve!")
+                FileSzerkesztes(user)
+                break
+
             elif keyboard.is_pressed('D'):
+                user_mappa = f"users/{user.nev}"
+                file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
+                file_path = os.path.join(user_mappa, file_nev)
+
+                try:
+                    with open(file_path, 'r') as file:
+                        tartalom = file.read()
+                        print(f"Jelenlegi tartalom a(z) {file_nev} fájlban:\n")
+                        print(tartalom)
+                except FileNotFoundError:
+                    print(f"Hiba: a fájl {file_nev} nem található.")
+                    FileSzerkesztes(user)
+                    
                 os.remove(file_path)
                 metadata_path = os.path.join(user_mappa, "user_metadata.json")
                 with open(metadata_path, 'r') as meta_file:
@@ -209,6 +256,7 @@ def FileSzerkesztes(user):
                 print(f"A(z) {file_nev} fájl sikeresen törölve!")
                 UserMenu(user)
                 break
+
             elif keyboard.is_pressed('M'):
                 print("Vissza a főmenübe...")
                 time.sleep(0.5)
