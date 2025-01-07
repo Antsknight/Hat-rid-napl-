@@ -59,6 +59,7 @@ def Regisztracio():
 
 
 def UserMenu(user):
+    print("\n")
     print(f"Üdv, {user.nev}!")  
     print("N: Új fájl létrehozása")
     print("W: Fájlok megtekintése/szerkesztése")
