@@ -13,9 +13,11 @@ def Menu():
         try:  
             if keyboard.is_pressed('b'):  
                asd = False
+               print("\n")
                Bejelentkezes()
             elif keyboard.is_pressed('r'):
                asd = False
+               print("\n")
                Regisztracio()
         except:
             return
@@ -66,13 +68,17 @@ def UserMenu(user):
         try:
             if keyboard.is_pressed('N'):
                 UjFile(user)
+                print("\n")
             elif keyboard.is_pressed('W'):
                 FajlSzerkVMegt(user)
+                print("\n")
                 time.sleep(0.5)
             elif keyboard.is_pressed('S'):
                 StatusValtMenu(user)
+                print("\n")
             elif keyboard.is_pressed('L'):
                 print("Kijelentkezés...")
+                print("\n")
                 Menu()
                 break
         except:
@@ -119,14 +125,17 @@ def FajlSzerkVMegt(user):
         try:
             if keyboard.is_pressed('S'):
                 FileSzerkesztes(user)
+                print("\n")
                 time.sleep(0.5)
 
             elif keyboard.is_pressed('F'):
                 FileMegtekintes(user)
+                print("\n")
                 time.sleep(0.5)
 
             elif keyboard.is_pressed('M'):
                 print("Vissza a főmenübe...")
+                print("\n")
                 time.sleep(0.5)
                 UserMenu(user)
                 break
@@ -166,10 +175,12 @@ def FileMegtekintes(user):
             try:
                 if keyboard.is_pressed('S'):
                     FileSzerkesztes(user)
+                    print("\n")
                     time.sleep(0.5)
 
                 elif keyboard.is_pressed('M'):
                     print("Vissza a főmenübe...")
+                    print("\n")
                     time.sleep(0.5)
                     UserMenu(user)
                     break
@@ -187,6 +198,7 @@ def FileSzerkesztes(user):
     while True:
         try:
             if keyboard.is_pressed('E'):
+                print("\n")
                 user_mappa = f"users/{user.nev}"
                 file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
                 file_path = os.path.join(user_mappa, file_nev)
@@ -212,6 +224,7 @@ def FileSzerkesztes(user):
                 break
 
             elif keyboard.is_pressed('F'):
+                print("\n")
                 user_mappa = f"users/{user.nev}"
                 file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
                 file_path = os.path.join(user_mappa, file_nev)
@@ -232,6 +245,7 @@ def FileSzerkesztes(user):
                 break
 
             elif keyboard.is_pressed('D'):
+                print("\n")
                 user_mappa = f"users/{user.nev}"
                 file_nev = input("Add meg a fájl nevét, amit szerkeszteni szeretnél: ") + ".txt"
                 file_path = os.path.join(user_mappa, file_nev)
@@ -244,7 +258,7 @@ def FileSzerkesztes(user):
                 except FileNotFoundError:
                     print(f"Hiba: a fájl {file_nev} nem található.")
                     FileSzerkesztes(user)
-                    
+
                 os.remove(file_path)
                 metadata_path = os.path.join(user_mappa, "user_metadata.json")
                 with open(metadata_path, 'r') as meta_file:
@@ -259,6 +273,7 @@ def FileSzerkesztes(user):
 
             elif keyboard.is_pressed('M'):
                 print("Vissza a főmenübe...")
+                print("\n")
                 time.sleep(0.5)
                 UserMenu(user)
                 break
@@ -274,14 +289,17 @@ def StatusValtMenu(user):
         try:
             if keyboard.is_pressed('M'):
                 print("Vissza a főmenübe...")
+                print("\n")
                 time.sleep(0.5)
                 UserMenu(user)
                 break
             elif keyboard.is_pressed('F'):
+                print("\n")
                 time.sleep(0.5)
                 Folyamatba(user)
                 break
             elif keyboard.is_pressed('D'):
+                print("\n")
                 time.sleep(0.5)
                 MegjelolesKeszkent(user)
                 break
