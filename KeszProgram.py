@@ -99,6 +99,7 @@ def UjFile(user):
     UserMenu(user)
 
 def FajlSzerkVMegt(user):
+    print("\n")
     print("W: Fájlok megtekintése")
     print("E: Fájlok szerkesztése")
     print("M: Vissza a főmenübe")
@@ -217,8 +218,9 @@ def FileSzerkesztes(user):
             pass
     
 def StatusValtMenu(user):
+    print("\n")
     print("M: Vissza a főmenübe")
-    print("N: Fájlok folyamatba váltása")
+    print("F: Fájlok folyamatba váltása")
     print("D: Fájlok megjelölése készként")
     while True:
         try:
@@ -283,8 +285,6 @@ def Folyamatba(user):
     else:
         print("Nem található ilyen fájl.")
         StatusValtMenu(user)
-
-
 
 print("start")
 Menu()
